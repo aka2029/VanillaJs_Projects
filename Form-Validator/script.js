@@ -33,6 +33,23 @@ function checkRequired(inputArr) {
   });
 }
 
+// Check input length
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFieldName(input)} must be atleast ${min} characters`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFieldName(input)} must be less than ${max} characters`
+    );
+  } else {
+    showSuccess(input);
+  }
+}
+
 // Get flield name
 function getFieldName(input) {
   return input.id.charAt(0).toUpperCase() + input.id.slice(1);
@@ -43,6 +60,9 @@ form.addEventListener("submit", function(e) {
   e.preventDefault();
 
   checkRequired([username, email, password, password2]); //we passed an array cause it's better when keeping scalability and clean code in mind. Although we would have to go through the array to access elements.
+
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
 });
 
 /* This is basic form validator - but everything inside the event listener is not scalable.
